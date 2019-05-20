@@ -109,13 +109,13 @@ export class DefaultInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // 统一加上服务端前缀
-    let url = req.url;
-    if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      url = environment.SERVER_URL + url;
-    }
+    // let url = req.url;
+    // if (!url.startsWith('https://') && !url.startsWith('http://')) {
+    //   url = environment.SERVER_URL + url;
+    // }
 
-    const newReq = req.clone({ url });
-    return next.handle(newReq).pipe(
+    // const newReq = req.clone({ url });
+    return next.handle(req).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理
         if (event instanceof HttpResponseBase) return this.handleData(event);
