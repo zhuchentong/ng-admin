@@ -1,0 +1,13 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button [routerLink]="['/poc/divide-result']" nz-button nzType="primary">新建</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <sf #sf mode="search" [schema]="searchSchema" (formSubmit)="getGroupList()" (formReset)="st.reset($event)"></sf>
+  <st #st [data]="groupDataSet" [columns]="columns">
+    <ng-template st-row="name" let-item let-index="index">
+      <a [routerLink]="['/group/group-detail', { id: item.id }]">{{ item.name }}</a>
+    </ng-template>
+  </st>
+</nz-card>

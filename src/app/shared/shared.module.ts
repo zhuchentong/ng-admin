@@ -13,15 +13,16 @@ import { TranslateModule } from '@ngx-translate/core';
 // #region third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
-const THIRDMODULES = [
-  NgZorroAntdModule,
-  CountdownModule
-];
+import { RuleEditComponent } from './components/rule-edit/rule-edit.component';
+import { PropertyRuleItemComponent } from './components/property-rule-item/property-rule-item.component';
+import { EventRuleItemComponent } from './components/event-rule-item/event-rule-item.component';
+import { DelonChartModule } from '@delon/chart';
+const THIRDMODULES = [NgZorroAntdModule, CountdownModule];
 // #endregion
 
 // #region your componets & directives
-const COMPONENTS = [];
 const DIRECTIVES = [];
+const COMPONENTS = [RuleEditComponent, PropertyRuleItemComponent, EventRuleItemComponent];
 // #endregion
 
 @NgModule({
@@ -34,6 +35,7 @@ const DIRECTIVES = [];
     DelonABCModule,
     DelonACLModule,
     DelonFormModule,
+    DelonChartModule,
     // third libs
     ...THIRDMODULES
   ],
@@ -51,6 +53,7 @@ const DIRECTIVES = [];
     DelonABCModule,
     DelonACLModule,
     DelonFormModule,
+    DelonChartModule,
     // i18n
     TranslateModule,
     // third libs
@@ -60,4 +63,4 @@ const DIRECTIVES = [];
     ...DIRECTIVES
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

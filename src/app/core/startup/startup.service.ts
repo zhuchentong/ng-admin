@@ -10,8 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { I18NService } from '../i18n/i18n.service';
 
 import { NzIconService } from 'ng-zorro-antd/icon';
-import { ICONS_AUTO } from '../../../style-icons-auto';
-import { ICONS } from '../../../style-icons';
+// import { ICONS_AUTO } from '../../../style-icons-auto';
+// import { ICONS } from '../../../style-icons';
 
 /**
  * 用于应用启动时
@@ -29,22 +29,22 @@ export class StartupService {
     private titleService: TitleService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: HttpClient,
-    private injector: Injector,
+    private injector: Injector
   ) {
-    iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
+    // iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
 
   private viaHttp(resolve: any, reject: any) {
     zip(
       this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
-      this.httpClient.get('assets/tmp/app-data.json'),
+      this.httpClient.get('assets/tmp/app-data.json')
     )
       .pipe(
         // 接收其他拦截器后产生的异常消息
         catchError(([langData, appData]) => {
           resolve(null);
           return [langData, appData];
-        }),
+        })
       )
       .subscribe(
         ([langData, appData]) => {
@@ -68,7 +68,7 @@ export class StartupService {
         () => {},
         () => {
           resolve(null);
-        },
+        }
       );
   }
 
@@ -91,13 +91,13 @@ export class StartupService {
     // mock
     const app: any = {
       name: `ng-alain`,
-      description: `Ng-zorro admin panel front-end framework`,
+      description: `Ng-zorro admin panel front-end framework`
     };
     const user: any = {
       name: 'Admin',
       avatar: './assets/tmp/img/avatar.jpg',
       email: 'cipchk@qq.com',
-      token: '123456789',
+      token: '123456789'
     };
     // 应用信息：包括站点名、描述、年份
     this.settingService.setApp(app);
@@ -114,15 +114,15 @@ export class StartupService {
           {
             text: '仪表盘',
             link: '/dashboard',
-            icon: { type: 'icon', value: 'appstore' },
+            icon: { type: 'icon', value: 'appstore' }
           },
           {
             text: '快捷菜单',
             icon: { type: 'icon', value: 'rocket' },
-            shortcutRoot: true,
-          },
-        ],
-      },
+            shortcutRoot: true
+          }
+        ]
+      }
     ]);
     // 设置页面标题的后缀
     this.titleService.suffix = app.name;

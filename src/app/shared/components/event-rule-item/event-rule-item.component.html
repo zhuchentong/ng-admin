@@ -1,0 +1,78 @@
+<section class="rule-item">
+  <div class="rule-container">
+    <div>
+      <button
+        nz-button
+        nzSize="small"
+        nz-popover
+        [(nzVisible)]="eventContentVisible"
+        [nzContent]="eventContent"
+        nzPlacement="bottomLeft"
+        nzTrigger="click"
+      >
+        {{ rule.event }}
+      </button>
+      <button
+        nz-button
+        nzSize="small"
+        nz-popover
+        [(nzVisible)]="propertyContentVisible"
+        [nzContent]="propertyContent"
+        nzPlacement="bottomLeft"
+        nzTrigger="click"
+      >
+        {{ rule.property.propertyName }}
+      </button>
+      <button
+        nz-button
+        nzSize="small"
+        nz-popover
+        [(nzVisible)]="conditionContentVisible"
+        [nzContent]="conditionContent"
+        nzPlacement="bottomLeft"
+        nzTrigger="click"
+      >
+        {{ rule.condition }}
+      </button>
+      <input nz-input placeholder="请选择或输入" nzSize="small" />
+      <nz-range-picker
+        nzFormat="yyyy-MM-dd"
+        [nzPlaceHolder]="['开始日期', '结束日期']"
+        (ngModelChange)="onRangeChange($event)"
+        nzSize="small"
+      ></nz-range-picker>
+      <i class="close-button" nz-icon nzType="close" nzTheme="outline" (click)="onRemoveRuleItem()"></i>
+      <i class="close-button" nz-icon nzType="plus" nzTheme="outline" (click)="onAddRuleItem()"></i>
+    </div>
+    <div class="event-rule-container">
+      <div class="event-rule-item" *ngFor="let ruleEventItem of rule.children; let i = index">
+        <app-property-rule-item
+          [rule]="ruleEventItem"
+          (remove)="onRemoveEventRuleItem(ruleEventItem, i, rule.children)"
+        ></app-property-rule-item>
+        <span class="rule-item-qie" *ngIf="i === 0">且</span>
+      </div>
+    </div>
+    <ng-template #eventContent>
+      <div class="popover-menu">
+        <div class="popover-menu-item" *ngFor="let item of eventList" (click)="onSelectEvent(item)">
+          {{ item.label }}
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #propertyContent>
+      <div class="popover-menu">
+        <div class="popover-menu-item" *ngFor="let item of propertyList" (click)="onSelectProperty(item)">
+          {{ item.label }}
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #conditionContent>
+      <div class="popover-menu">
+        <div class="popover-menu-item" *ngFor="let item of conditionList" (click)="onSelectCondition(item.key)">
+          {{ item.label }}
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</section>

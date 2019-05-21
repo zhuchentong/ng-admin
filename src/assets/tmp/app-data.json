@@ -15,27 +15,19 @@
       "hideInBreadcrumb": true,
       "children": [
         {
-          "text": "系统管理",
+          "text": "群组",
+          "icon": { "type": "icon", "value": "man" },
+          "link": "/group/group-manage"
+        },
+        {
+          "text": "标签",
+          "icon": { "type": "icon", "value": "tags" },
+          "link": "/tag/tag-manage"
+        },
+        {
+          "text": "营销活动",
           "icon": "anticon-bulb",
-          "children": [
-            {
-              "text": "菜单1",
-              "link": "/style/typography",
-              "shortcut": true
-            },
-            {
-              "text": "菜单2",
-              "link": "/style/gridmasonry"
-            },
-            {
-              "text": "菜单3",
-              "link": "/style/colors"
-            },
-            {
-              "text": "菜单4",
-              "link": "/style/colors"
-            }
-          ]
+          "link": "/marketing"
         }
       ]
     }

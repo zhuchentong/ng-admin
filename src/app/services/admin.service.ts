@@ -1,10 +1,10 @@
 import { NetService } from '@core/http';
 import { Observable } from 'rxjs';
-import { operatorController } from 'app/config/service/operator.controller';
+import { adminController } from 'app/config/service/admin.controller';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class OperatorService {
+export class AdminService {
   constructor(private net: NetService) {}
 
   /**
@@ -12,8 +12,8 @@ export class OperatorService {
    */
   public login(params): Observable<any> {
     return this.net.send({
-      service: operatorController.login,
-      params,
+      service: adminController.login,
+      params
     });
   }
 }

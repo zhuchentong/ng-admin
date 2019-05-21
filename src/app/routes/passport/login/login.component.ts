@@ -7,12 +7,12 @@ import { SocialService, SocialOpenType, ITokenService, DA_SERVICE_TOKEN } from '
 import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
 import { StartupService } from '@core';
-import { OperatorService } from 'app/services/operator.service';
+import { AdminService } from 'app/services/admin.service';
 @Component({
   selector: 'passport-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less'],
-  providers: [OperatorService, SocialService],
+  providers: [AdminService, SocialService]
 })
 export class UserLoginComponent implements OnDestroy {
   form: FormGroup;
@@ -34,14 +34,14 @@ export class UserLoginComponent implements OnDestroy {
     private startupSrv: StartupService,
     public http: _HttpClient,
     public msg: NzMessageService,
-    private operatorService: OperatorService,
+    private adminService: AdminService
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required, Validators.minLength(4)]],
       password: [null, Validators.required],
       mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
       captcha: [null, [Validators.required]],
-      remember: [true],
+      remember: [true]
     });
     modalSrv.closeAll();
   }
@@ -102,20 +102,19 @@ export class UserLoginComponent implements OnDestroy {
 
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
-    this.operatorService
+    this.adminService
       .login({
         username: this.userName.value,
-        password: this.password.value,
+        password: this.password.value
       })
-      .subscribe(({ token, operatorResponse }) => {
+      .subscribe(token => {
         // 清空路由复用信息
         this.reuseTabService.clear();
-        // 设置用户Token信息
+        // // 设置用户Token信息
         this.tokenService.set({
-          token,
-          ...operatorResponse,
+          token: Date.now().toString()
         });
-
+        console.log(123);
         this.router.navigateByUrl('/');
       });
   }
@@ -133,24 +132,24 @@ export class UserLoginComponent implements OnDestroy {
     switch (type) {
       case 'auth0':
         url = `//cipchk.auth0.com/login?client=8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5&redirect_uri=${decodeURIComponent(
-          callback,
+          callback
         )}`;
         break;
       case 'github':
         url = `//github.com/login/oauth/authorize?client_id=9d6baae4b04a23fcafa2&response_type=code&redirect_uri=${decodeURIComponent(
-          callback,
+          callback
         )}`;
         break;
       case 'weibo':
         url = `https://api.weibo.com/oauth2/authorize?client_id=1239507802&response_type=code&redirect_uri=${decodeURIComponent(
-          callback,
+          callback
         )}`;
         break;
     }
     if (openType === 'window') {
       this.socialService
         .login(url, '/', {
-          type: 'window',
+          type: 'window'
         })
         .subscribe(res => {
           if (res) {
@@ -160,7 +159,7 @@ export class UserLoginComponent implements OnDestroy {
         });
     } else {
       this.socialService.login(url, '/', {
-        type: 'href',
+        type: 'href'
       });
     }
   }

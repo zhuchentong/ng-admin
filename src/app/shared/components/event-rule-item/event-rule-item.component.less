@@ -1,0 +1,78 @@
+.rule-item {
+  position: relative;
+  margin: 10px 0;
+  input,
+  button {
+    margin: 0 5px;
+  }
+
+  button {
+    width: 120px;
+  }
+
+  input {
+    width: 100px;
+  }
+
+  .close-button {
+    font-size: 12px;
+    display: none;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  &:hover {
+    .close-button {
+      display: inline-block;
+    }
+  }
+}
+
+.rule-action {
+  margin-left: 20px;
+  visibility: hidden;
+  margin-top: 20px;
+}
+
+.popover-menu {
+  max-height: 250px;
+  min-width: 100px;
+  margin: -12px;
+  overflow: auto;
+
+  .popover-menu-item {
+    cursor: pointer;
+    width: 100%;
+    padding: 2px 12px;
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+}
+
+.event-rule-container {
+  position: relative;
+  margin-left: 50px;
+  padding-left: 50px;
+  border-left: solid 1px rgb(238, 238, 238);
+
+  .rule-item-qie {
+    left: -10px;
+    top: 50%;
+    margin-top: -10px;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #e2e2e2;
+    text-align: center;
+    z-index: 1;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: rgba(0, 152, 225, 0.06);
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    color: #0097e0;
+  }
+}

@@ -1,0 +1,41 @@
+<div class="rule-tip">满足条件</div>
+<div class="rule-container">
+  <div class="rule-group" *ngFor="let ruleGroup of ruleList; let i = index">
+    <div class="rule-item-group" [ngSwitch]="getRuleType(ruleItem)" *ngFor="let ruleItem of ruleGroup; let i = index">
+      <div [ngStyle]="{ 'padding-left': i === 0 ? '0' : '50px' }">
+        <app-property-rule-item
+          *ngSwitchCase="'property'"
+          [rule]="ruleItem"
+          (remove)="onRemoveRuleItem(ruleItem, i, ruleGroup)"
+        ></app-property-rule-item>
+        <app-event-rule-item
+          *ngSwitchCase="'event'"
+          [rule]="ruleItem"
+          (remove)="onRemoveRuleItem(ruleItem, i, ruleGroup)"
+        ></app-event-rule-item>
+      </div>
+      <span class="rule-item-qie" *ngIf="i === 1">且</span>
+    </div>
+    <div class="rule-action">
+      <div>
+        <button nz-button nzShape="round" nzSize="small" nzType="primary" (click)="addPropertyRule(ruleGroup)">
+          用户属性
+        </button>
+        <button nz-button nzShape="round" nzSize="small" nzType="primary" (click)="addEventRule(ruleGroup)">
+          触发事件
+        </button>
+      </div>
+    </div>
+    <span class="rule-item-qie" *ngIf="i !== 0">且</span>
+  </div>
+  <div class="rule-action">
+    <div>
+      <button nz-button nzShape="round" nzSize="small" nzType="primary" (click)="addPropertyRule()">用户属性</button>
+      <button nz-button nzShape="round" nzSize="small" nzType="primary" (click)="addEventRule()">触发事件</button>
+    </div>
+    <div class="rule-action-tip" *ngIf="!ruleList.length">
+      选择任意条件开始创建一个分群
+    </div>
+    <span class="rule-item-qie" *ngIf="ruleList.length">且</span>
+  </div>
+</div>

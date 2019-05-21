@@ -1,0 +1,8 @@
+<nz-card>
+  <sv-container class="result-container" layout="horizontal" [col]="6">
+    <sv label="分群总数" unit="个">{{ recordDataSet?.length }}</sv>
+    <sv label="成功" unit="个">{{ getDivideStateCount().success }}</sv>
+    <sv label="失败" unit="个">{{ getDivideStateCount().failure }}</sv>
+  </sv-container>
+  <st [data]="recordDataSet" [columns]="columns"> </st>
+</nz-card>

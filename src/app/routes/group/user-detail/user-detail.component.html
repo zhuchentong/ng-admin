@@ -1,0 +1,94 @@
+<page-header [title]="title" [breadcrumb]="breadcrumb">
+  <ng-template #title> {{ uniqueId }} 用户行为 </ng-template>
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/poc/divide']">分群</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>用户行为</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+</page-header>
+<div nz-row nzGutter="32">
+  <nz-col nzXs="16">
+    <div sg-container="2">
+      <sg>
+        <nz-card nzTitle="行为统计">
+          <g2-bar height="200" [title]="'用户行为'" [data]="eventStatistic"></g2-bar>
+        </nz-card>
+      </sg>
+      <sg>
+        <nz-card nzTitle="用户标签">
+          <g2-tag-cloud [data]="userTags" [height]="200"></g2-tag-cloud>
+        </nz-card>
+      </sg>
+    </div>
+
+    <nz-card nzTitle="行为序列">
+      <nz-timeline>
+        <nz-timeline-item *ngFor="let event of events">
+          <nz-collapse>
+            <nz-collapse-panel [nzHeader]="headerTpl" [nzExtra]="extraTpl">
+              <sv-container col="2" [labelWidth]="100">
+                <sv label="平台" *ngIf="event.detail['平台']">{{ event.detail['平台'] }}</sv>
+                <sv label="应用版本" *ngIf="event.detail['应用版本']">{{ event.detail['应用版本'] }}</sv>
+                <sv label="设备类型" *ngIf="event.detail['设备类型']">{{ event.detail['设备类型'] }}</sv>
+                <sv label="页面标题" *ngIf="event.detail['页面标题']">{{ event.detail['页面标题'] }}</sv>
+                <sv label="设备制造商" *ngIf="event.detail['设备制造商']">{{ event.detail['设备制造商'] }}</sv>
+                <sv label="设备品牌" *ngIf="event.detail['设备品牌']">{{ event.detail['设备品牌'] }}</sv>
+                <sv label="设备型号" *ngIf="event.detail['设备型号']">{{ event.detail['设备型号'] }}</sv>
+                <sv label="操作系统" *ngIf="event.detail['操作系统']">{{ event.detail['操作系统'] }}</sv>
+                <sv label="渠道来源分组" *ngIf="event.detail['渠道来源分组']">{{ event.detail['渠道来源分组'] }}</sv>
+                <sv label="浏览器" *ngIf="event.detail['浏览器']">{{ event.detail['浏览器'] }}</sv>
+                <sv label="浏览器版本" *ngIf="event.detail['浏览器版本']">{{ event.detail['浏览器版本'] }}</sv>
+                <sv label="网络类型" *ngIf="event.detail['网络类型']">{{ event.detail['网络类型'] }}</sv>
+                <sv label="运营商" *ngIf="event.detail['运营商']">{{ event.detail['运营商'] }}</sv>
+                <sv label="屏幕宽度" *ngIf="event.detail['屏幕宽度']">{{ event.detail['屏幕宽度'] }}</sv>
+                <sv label="屏幕高度" *ngIf="event.detail['屏幕高度']">{{ event.detail['屏幕高度'] }}</sv>
+                <sv label="IP" *ngIf="event.detail['IP']">{{ event.detail['IP'] }}</sv>
+                <sv label="国家" *ngIf="event.detail['国家']">{{ event.detail['国家'] }}</sv>
+                <sv label="省份" *ngIf="event.detail['省份']">{{ event.detail['省份'] }}</sv>
+                <sv label="城市" *ngIf="event.detail['城市']">{{ event.detail['城市'] }}</sv>
+              </sv-container>
+            </nz-collapse-panel>
+          </nz-collapse>
+          <ng-template #headerTpl>
+            <ng-container [ngSwitch]="event.event">
+              <span *ngSwitchCase="'$pageview'"> 浏览页面: {{ event.detail['页面标题'] }} </span>
+              <span *ngSwitchCase="'$startup'"> 启动 </span>
+              <span *ngSwitchCase="'login'"> 用户登录 </span>
+              <span *ngSwitchCase="'remittanceweixininfo'">资金_微信汇款_信息完善</span>
+              <span *ngSwitchCase="'financialpay'">理财_理财产品购买支付</span>
+              <span *ngSwitchCase="'$end'">关闭</span>
+              <span *ngSwitchCase="'$openaccountprepare'">关闭</span>
+              <span *ngSwitchDefault>其他</span>
+            </ng-container>
+          </ng-template>
+          <ng-template #extraTpl>
+            {{ event.contextDate }}
+          </ng-template>
+        </nz-timeline-item>
+      </nz-timeline>
+    </nz-card>
+  </nz-col>
+  <nz-col nzXs="8">
+    <nz-card nzTitle="用户信息">
+      <sv-container col="4" *ngIf="user" col="1" [labelWidth]="100">
+        <sv label="用户ID">{{ user.uniqueId }}</sv>
+        <sv label="用户姓名">{{ user.name }}</sv>
+        <sv label="用户性别">{{ user.gender }}</sv>
+        <sv label="用户年龄">{{ user.age }}</sv>
+        <sv label="用户职位">{{ user.occupation }}</sv>
+        <sv label="用户学历">{{ user.education }}</sv>
+        <sv label="用户手机">{{ user.phone }}</sv>
+        <sv label="用户邮箱">{{ user.email }}</sv>
+        <sv label="所在国家">{{ user.country }}</sv>
+        <sv label="所在省份">{{ user.province }}</sv>
+        <sv label="所在城市">{{ user.city }}</sv>
+        <sv label="注册时间">{{ user.signup_time }}</sv>
+        <sv label="首次访问时间">{{ user.first_visit_time }}</sv>
+        <sv label="最后访问时间">{{ user.last_visit_time }}</sv>
+        <sv label="累积访问天数">{{ user.sum_visit_day }}</sv>
+        <sv label="下载渠道">{{ user.channel }}</sv>
+      </sv-container>
+    </nz-card>
+  </nz-col>
+</div>

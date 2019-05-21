@@ -1,0 +1,33 @@
+<div nz-row nzGutter="32">
+  <nz-col nzXs="8">
+    <nz-card [nzTitle]="catalogTitle">
+      <ng-template #catalogTitle>
+        <nz-input-group [nzSuffix]="suffixIcon">
+          <input type="text" nz-input placeholder="搜索标签" [(ngModel)]="searchValue" />
+        </nz-input-group>
+        <ng-template #suffixIcon>
+          <i nz-icon type="search"></i>
+        </ng-template>
+      </ng-template>
+
+      <nz-tree [nzData]="tagTreeData" [nzSearchValue]="searchValue" nzShowLine (nzClick)="onGetTagList($event)">
+      </nz-tree>
+    </nz-card>
+  </nz-col>
+  <nz-col nzXs="16">
+    <nz-card *ngIf="currentCatalog; else emptyCatalog" [nzTitle]="currentCatalog.title">
+      <st [data]="currentCatalog.tags" [columns]="tagColumns">
+        <ng-template st-row="name" let-item let-index="index">
+          <a [routerLink]="['/tag/tag-detail', { id: item.id }]">{{ item.tagNameCh }}</a>
+        </ng-template>
+      </st>
+    </nz-card>
+    <ng-template #emptyCatalog>
+      <nz-card>
+        <div nz-row nzType="flex" nzJustify="center" nzAlign="center">
+          <nz-col>请选择需要查看的标签</nz-col>
+        </div>
+      </nz-card>
+    </ng-template>
+  </nz-col>
+</div>

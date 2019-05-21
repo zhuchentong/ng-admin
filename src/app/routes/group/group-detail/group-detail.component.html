@@ -1,0 +1,23 @@
+<page-header [title]="groupName" [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/group/group-manage']">分群</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>分群结果</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #phActionTpl>
+    <button (click)="onSave()" nz-button nzType="primary">保存</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <app-rule-edit></app-rule-edit>
+</nz-card>
+<nz-card *ngIf="!isCreate && userList.length">
+  <nz-card nzTitle="分组结果">
+    <st [data]="userList" [columns]="userColumns">
+      <ng-template st-row="name" let-user let-index="index">
+        <a [routerLink]="['/user/tag-detail', { id: user.id }]">{{ user.name }}</a>
+      </ng-template>
+    </st>
+  </nz-card>
+</nz-card>

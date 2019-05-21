@@ -1,0 +1,42 @@
+<section class="rule-item">
+  <div class="rule-container">
+    <button
+      nz-button
+      nzSize="small"
+      nz-popover
+      [(nzVisible)]="propertyContentVisible"
+      [nzContent]="propertyContent"
+      nzPlacement="bottomLeft"
+      nzTrigger="click"
+    >
+      {{ rule.property.propertyName }}
+    </button>
+    <button
+      nz-button
+      nzSize="small"
+      nz-popover
+      [(nzVisible)]="conditionContentVisible"
+      [nzContent]="conditionContent"
+      nzPlacement="bottomLeft"
+      nzTrigger="click"
+    >
+      {{ rule.condition }}
+    </button>
+    <input nz-input placeholder="请选择或输入" nzSize="small" />
+    <i class="close-button" nz-icon nzType="close" nzTheme="outline" (click)="onRemoveRuleItem()"></i>
+    <ng-template #propertyContent>
+      <div class="popover-menu">
+        <div class="popover-menu-item" *ngFor="let item of propertyList" (click)="onSelectProperty(item)">
+          {{ item.label }}
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #conditionContent>
+      <div class="popover-menu">
+        <div class="popover-menu-item" *ngFor="let item of conditionList" (click)="onSelectCondition(item.key)">
+          {{ item.label }}
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</section>

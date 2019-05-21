@@ -7,6 +7,7 @@ import {
   HttpErrorResponse,
   HttpEvent,
   HttpResponseBase,
+  HttpHeaders
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
@@ -30,7 +31,7 @@ const CODEMESSAGE = {
   500: '服务器发生错误，请检查服务器。',
   502: '网关错误。',
   503: '服务不可用，服务器暂时过载或维护。',
-  504: '网关超时。',
+  504: '网关超时。'
 };
 
 /**
@@ -113,16 +114,18 @@ export class DefaultInterceptor implements HttpInterceptor {
     // if (!url.startsWith('https://') && !url.startsWith('http://')) {
     //   url = environment.SERVER_URL + url;
     // }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
 
-    // const newReq = req.clone({ url });
-    return next.handle(req).pipe(
+    return next.handle(req.clone({ headers })).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理
         if (event instanceof HttpResponseBase) return this.handleData(event);
         // 若一切都正常，则后续操作
         return of(event);
       }),
-      catchError((err: HttpErrorResponse) => this.handleData(err)),
+      catchError((err: HttpErrorResponse) => this.handleData(err))
     );
   }
 }

@@ -1,0 +1,45 @@
+<page-header [title]="title" [breadcrumb]="breadcrumb">
+  <ng-template #title>{{ tagInfo?.tagNameCh }}</ng-template>
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/poc/tag']">标签</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item><a>标签详情</a></nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+</page-header>
+
+<div nz-row nzGutter="32">
+  <nz-col nzXs="16">
+    <nz-card nzTitle="标签信息">
+      <sv-container col="4" *ngIf="tagInfo" col="2" [labelWidth]="100">
+        <sv label="标签名称">{{ tagInfo.level1Tag }}</sv>
+        <sv label="标签类型">{{ tagInfo.tagTopic }}</sv>
+        <sv label="标签分组">{{ tagInfo.tagNameCh }}</sv>
+        <sv label="标签属性">{{ tagTypeDict[tagInfo.tagType] }}</sv>
+        <sv label="创建时间">{{ tagInfo.createTime | date: 'yyyy-MM-dd hh:mm:ss' }}</sv>
+        <sv label="更新时间">{{ tagInfo.updateTime | date: 'yyyy-MM-dd hh:mm:ss' }}</sv>
+      </sv-container>
+    </nz-card>
+    <nz-card nzTitle="标签用户">
+      <st [data]="tagUserList" [columns]="userColumns">
+        <ng-template st-row="name" let-user let-index="index">
+          <a [routerLink]="['/user/tag-detail', { id: user.id }]">{{ user.name }}</a>
+        </ng-template>
+      </st>
+    </nz-card>
+  </nz-col>
+  <nz-col nzXs="8">
+    <nz-card nzTitle="标签状态">
+      <sv-container col="4" *ngIf="tagRecord" col="1" [labelWidth]="100">
+        <sv label="运行状态">{{ tagRecord.status === 'active' ? '正常' : '暂停' }}</sv>
+        <sv label="计算状态">{{ tagRecord.lastStatus === 'success' ? '成功' : '失败' }}</sv>
+        <sv label="覆盖人数">{{ tagRecord.resCount }}</sv>
+        <sv label="覆盖比例">{{ ((tagRecord.resCount / tagRecord.totalCount) * 100).toFixed(2) }}%</sv>
+        <sv label="最后运行时间">{{ tagRecord.lastTime | date: 'yyyy-MM-dd hh:mm:ss' }}</sv>
+        <sv label="更新方式">{{ tagRecord.type === 'auto' ? '自动' : '手动' }}</sv>
+        <sv label="更新时间">{{ tagRecord.type === 'auto' ? '每天 ' + tagRecord.time : '-' }}</sv>
+        <sv label="创建人">{{ tagRecord.createUser }}</sv>
+      </sv-container>
+    </nz-card>
+  </nz-col>
+</div>

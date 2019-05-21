@@ -21,8 +21,8 @@ export class PageService {
    */
   public getConfig() {
     return {
-      pageIndex: this.pageIndex - 1,
-      pageSize: this.pageSize,
+      pageNum: this.pageIndex,
+      pageSize: this.pageSize
     };
   }
 
