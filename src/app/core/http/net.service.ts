@@ -7,6 +7,7 @@ import { Model } from 'app/model';
 import { classToPlain, plainToClass } from 'class-transformer';
 import { PageService, IRequestOption } from 'app/core/http';
 import * as qs from 'qs';
+import request from 'request';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,16 @@ export class NetService {
     // 生成请求METHOD
     const requestMethod: string = options.service.method;
     this.generateRequestLoading(options);
+    console.log(this.generateRequestBody(options));
+    // return request(requestUrl,{
+    //   json: true,
+    //   method:requestMethod,
+    //   body: this.generateRequestBody(options),
+    //   qs:
+    // })
     return this.http
       .request(requestMethod, requestUrl, {
-        // body: this.generateRequestBody(options),
+        body: this.generateRequestBody(options),
         headers: this.generateRequestHeader(options),
         observe: 'response',
         responseType: 'json',
@@ -63,9 +71,9 @@ export class NetService {
    * @param options 请求选项
    */
   private generateRequestParams(options): HttpParams {
-    // if (!['GET', 'DELETE'].includes(options.service.method)) {
-    //   return null;
-    // }
+    if (!['GET', 'DELETE'].includes(options.service.method)) {
+      return null;
+    }
 
     // TODO:分页处理
     let params = options.params;
@@ -103,7 +111,7 @@ export class NetService {
       params = Object.assign(params || {}, this.getPageParams(options.page));
     }
 
-    return params;
+    return qs.stringify(params);
   }
 
   private getPageParams(page: PageService) {

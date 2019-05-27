@@ -9,5 +9,9 @@ export const groupController = {
     controller,
     action: 'users',
     method: 'GET'
+  },
+  getGroupById: {
+    controller,
+    method: 'GET'
   }
 };

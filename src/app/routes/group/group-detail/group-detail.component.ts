@@ -5,6 +5,7 @@ import { SFSchema } from '@delon/form';
 import { ActivatedRoute } from '@angular/router';
 import { GroupService } from 'app/services/group.service';
 import { PageService } from '@core/http';
+import { RuleEditComponent } from '@shared/components/rule-edit/rule-edit.component';
 
 @Component({
   selector: 'app-group-group-detail',
@@ -12,6 +13,9 @@ import { PageService } from '@core/http';
   providers: [GroupService, PageService]
 })
 export class GroupGroupDetailComponent implements OnInit {
+  @ViewChild('ruleEditComponent')
+  ruleEditComponent: RuleEditComponent;
+
   public groupName: string;
   public group;
   public isCreate: boolean;
@@ -49,10 +53,9 @@ export class GroupGroupDetailComponent implements OnInit {
 
   public ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    // this.isCreate = !name;
-    // this.groupName = name || '新建';
-    this.isCreate || this.getUserList(id);
-    // this.isCreate || this.getgroupRule(id);
+    this.isCreate = !id;
+    id && this.getUserList(id);
+    id && this.getGroup(id);
   }
 
   /**
@@ -68,10 +71,11 @@ export class GroupGroupDetailComponent implements OnInit {
       });
   }
 
-  public getgroupRule(id) {
-    // this.http.get(`/api/group/${id}`).subscribe(data => {
-    //   this.group = data;
-    // });
+  public getGroup(id) {
+    this.groupService.getGroupById(id).subscribe(data => {
+      this.group = data;
+      // this.ruleEditComponent.setDefaultScript(data.script);
+    });
   }
 
   public onSave() {}

@@ -115,6 +115,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     //   url = environment.SERVER_URL + url;
     // }
     const headers = new HttpHeaders({
+      // 'Content-Type': 'application/json'
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 

@@ -15,8 +15,13 @@
       "hideInBreadcrumb": true,
       "children": [
         {
+          "text": "仪表盘",
+          "icon": { "type": "icon", "value": "dashboard" },
+          "link": "/dashboard"
+        },
+        {
           "text": "群组",
-          "icon": { "type": "icon", "value": "man" },
+          "icon": { "type": "icon", "value": "team" },
           "link": "/group/group-manage"
         },
         {
@@ -27,7 +32,7 @@
         {
           "text": "营销活动",
           "icon": "anticon-bulb",
-          "link": "/marketing"
+          "link": "/marketing/list"
         }
       ]
     }

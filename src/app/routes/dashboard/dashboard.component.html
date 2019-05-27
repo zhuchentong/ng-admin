@@ -1,6 +1,77 @@
-<div class="alain-default__content-title">
-  <h1>
-    Page Name
-    <small>Welcome !</small>
-  </h1>
+<div nz-row nzGutter="32" class="p-sm">
+  <div nz-col nzSpan="8">
+    <g2-card [title]="'用户事件'" [bordered]="true" [total]="'今日 3,023'" footer="总数 4,522,423" [action]="action">
+      <ng-template #action>
+        <nz-tooltip [nzTitle]="'指标说明'">
+          <i nz-tooltip nz-icon nzType="info-circle"></i>
+        </nz-tooltip>
+      </ng-template>
+    </g2-card>
+  </div>
+  <div nz-col nzSpan="8">
+    <g2-card
+      [title]="'营销活动推送量'"
+      [bordered]="true"
+      [total]="'今日 6,560'"
+      footer="总数 123,423"
+      [action]="action"
+    >
+      <ng-template #action>
+        <nz-tooltip [nzTitle]="'指标说明'">
+          <i nz-tooltip nz-icon nzType="info-circle"></i>
+        </nz-tooltip>
+      </ng-template>
+    </g2-card>
+  </div>
+  <div nz-col nzSpan="8">
+    <g2-card [title]="'新用户数'" [bordered]="true" [total]="'今日 1,560'" footer="本月 12,323" [action]="action">
+      <ng-template #action>
+        <nz-tooltip [nzTitle]="'指标说明'">
+          <i nz-tooltip nz-icon nzType="info-circle"></i>
+        </nz-tooltip>
+      </ng-template>
+    </g2-card>
+  </div>
+  <div nz-col nzSpan="24">
+    <g2-timeline [data]="chartData" [titleMap]="{ y1: '客流量', y2: '支付笔数' }" [height]="200"></g2-timeline>
+  </div>
+
+  <div nz-col nzSpan="12">
+    <nz-card nzTitle="重度用户">
+      <g2-custom (render)="userRender($event)"></g2-custom>
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="12">
+    <nz-card nzTitle="标签组成">
+      <g2-pie
+        [hasLegend]="true"
+        title="标签组成"
+        subTitle="标签组成"
+        [total]="total"
+        [data]="tagPieData"
+        height="370"
+      ></g2-pie>
+    </nz-card>
+    <nz-card nzTitle="事件组成">
+      <g2-pie
+        [hasLegend]="true"
+        title="事件组成"
+        subTitle="事件组成"
+        [total]="total"
+        [data]="eventPieData"
+        height="370"
+      ></g2-pie>
+    </nz-card>
+  </div>
+
+  <div nz-col nzSpan="12">
+    <nz-card nzTitle="重度标签">
+      <g2-custom (render)="tagRender($event)"></g2-custom>
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="12">
+    <nz-card nzTitle="用户漏斗">
+      <g2-custom (render)="convertRender($event)"></g2-custom>
+    </nz-card>
+  </div>
 </div>

@@ -23,7 +23,7 @@
     <nz-card nzTitle="标签用户">
       <st [data]="tagUserList" [columns]="userColumns">
         <ng-template st-row="name" let-user let-index="index">
-          <a [routerLink]="['/user/tag-detail', { id: user.id }]">{{ user.name }}</a>
+          <a [routerLink]="['/group/user-detail', { id: user.id }]">{{ user.name }}</a>
         </ng-template>
       </st>
     </nz-card>

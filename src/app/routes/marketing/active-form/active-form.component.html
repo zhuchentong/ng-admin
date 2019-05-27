@@ -1,0 +1,149 @@
+<page-header [title]="isCreate ? '创建活动' : '编辑活动'" [breadcrumb]="breadcrumb" [action]="actionTpl">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item><a [routerLink]="['/group/group-manage']">营销活动</a></nz-breadcrumb-item>
+      <nz-breadcrumb-item
+        ><a>{{ isCreate ? '创建' : '编辑' }}</a></nz-breadcrumb-item
+      >
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #actionTpl>
+    <button nz-button nzType="primary" (click)="onCreate()">创建</button>
+  </ng-template>
+</page-header>
+
+<form nz-form nzLayout="horizontal" [formGroup]="activeForm">
+  <div nz-row nzGutter="32">
+    <nz-card nzTitle="营销信息">
+      <div nz-col [nzSpan]="12">
+        <nz-form-item nzFlex>
+          <nz-form-label [nzSpan]="6">营销方案名称</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input nz-input formControlName="activityName" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item nzFlex>
+          <nz-form-label [nzSpan]="6">营销类别</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <nz-select formControlName="activityType">
+              <nz-option nzLabel="提升" nzValue="提升"> </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item nzFlex>
+          <nz-form-label [nzSpan]="6">营销关键字</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input nz-input formControlName="keyword" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24">
+        <nz-form-item nzFlex nzJustify="start">
+          <nz-form-label [nzSpan]="3">营销时间</nz-form-label>
+          <nz-form-control [nzSpan]="3">
+            <label #checkbox nz-checkbox>持续营销</label>
+          </nz-form-control>
+          <nz-form-control [nzSpan]="6">
+            <nz-range-picker [nzDisabled]="!checkbox.nzChecked" formControlName="dataRange"></nz-range-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24">
+        <nz-form-item nzFlex nzJustify="start">
+          <nz-form-label [nzSpan]="3">营销目标</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <textarea nz-input [nzAutosize]="{ minRows: 2, maxRows: 6 }" formControlName="target"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </nz-card>
+    <nz-card nzTitle="营销对象">
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="3">挖掘模型</nz-form-label>
+          <nz-form-control [nzSpan]="10">
+            <nz-select formControlName="model">
+              <nz-option nzLabel="全量客户聚类" nzValue="全量客户聚类"> </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="24">
+        <nz-form-item nzFlex>
+          <nz-form-label [nzSpan]="3">客户群体</nz-form-label>
+          <nz-form-control [nzSpan]="21">
+            <nz-checkbox-group formControlName="userGroup"></nz-checkbox-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </nz-card>
+    <nz-card nzTitle="营销产品">
+      <div nz-col [nzSpan]="24">
+        <nz-form-item nzFlex>
+          <nz-form-control>
+            <nz-radio-group #productGroup formControlName="groupType">
+              <label nz-radio nzValue="客户-产品适配模型">客户-产品适配模型</label>
+              <label nz-radio nzValue="指定">指定</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12" *ngIf="activeForm.value.groupType === '客户-产品适配模型'">
+        <nz-form-item nzFlex>
+          <nz-form-label [nzSpan]="6">适配模型</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <nz-select formControlName="productGroup">
+              <nz-option nzLabel="全量客户聚类" nzValue="全量客户聚类"> </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-row *ngIf="activeForm.value.groupType === '指定'">
+        <div nz-col [nzSpan]="12">
+          <nz-form-item nzFlex>
+            <nz-form-label [nzSpan]="6">主推产品类型</nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              <nz-select formControlName="prodType">
+                <nz-option nzLabel="类型1" nzValue="类型1"> </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item nzFlex>
+            <nz-form-label [nzSpan]="6">备推产品类型</nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              <nz-select formControlName="prodType1">
+                <nz-option nzLabel="类型1" nzValue="类型1"> </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item nzFlex>
+            <nz-form-label [nzSpan]="6">主推产品名称</nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              <nz-select formControlName="prodName">
+                <nz-option nzLabel="类型1" nzValue="类型1"> </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item nzFlex>
+            <nz-form-label [nzSpan]="6">备推产品名称</nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              <nz-select formControlName="prodName1">
+                <nz-option nzLabel="类型1" nzValue="类型1"> </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+</form>

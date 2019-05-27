@@ -2,53 +2,68 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import { ActivatedRoute } from '@angular/router';
+import { UsersService } from 'app/services/users.service';
+import { DatePipe } from '@angular/common';
+import { G2TagCloudData } from '@delon/chart';
+import { TagsOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
   selector: 'app-group-user-detail',
-  templateUrl: './user-detail.component.html'
+  templateUrl: './user-detail.component.html',
+  providers: [UsersService]
 })
 export class GroupUserDetailComponent implements OnInit {
-  public uniqueId: string;
+  public userId: string;
   public user: any;
   public events: any[] = [];
   public eventStatistic = [];
-  public userTags = [];
-  constructor(private route: ActivatedRoute, private http: _HttpClient) {}
+  public userTags: G2TagCloudData[] = [];
+  constructor(private route: ActivatedRoute, private usersService: UsersService, private datePipe: DatePipe) {}
 
   ngOnInit() {
-    this.uniqueId = this.route.snapshot.paramMap.get('uniqueId');
+    this.userId = this.route.snapshot.paramMap.get('id');
     this.getUserData();
     this.getUserEvent();
     this.getUserTag();
   }
 
   getUserData() {
-    // this.http.get(`/api/user/${this.uniqueId}`).subscribe(data => {
-    //   this.user = data;
-    // });
+    this.usersService.getUser(this.userId).subscribe(data => {
+      this.user = data;
+    });
   }
 
   getUserEvent() {
-    // this.http.get(`/api/event/${this.uniqueId}`).subscribe(data => {
-    //   this.events = data;
-    //   this.getEventStatistic();
-    // });
+    this.usersService.getAction(this.userId).subscribe(data => {
+      this.events = data;
+      if (data) {
+        this.getEventStatistic();
+      }
+    });
   }
 
   getUserTag() {
-    // this.http.get(`/api/tag/user/${this.uniqueId}`).subscribe(data => {
-    //   console.log(data);
-    //   this.userTags = data.map(x => ({
-    //     x: x.tag,
-    //     value: x.value
-    //   }));
-    // });
+    this.usersService.getTagByUserId(this.userId).subscribe(data => {
+      if (!data) {
+        return;
+      }
+
+      const tags = data.map(tag => ({
+        x: tag.level1Tag,
+        value: Math.floor(Math.random() * 100),
+        category: tag.tagTopic
+      }));
+
+      this.userTags = tags;
+    });
   }
 
   getEventStatistic() {
     const statistic = {};
-    this.events.forEach(({ contextDate }) => {
-      const date = contextDate.split(' ')[0];
+
+    this.events.forEach(({ eventTime }: { eventTime: Date }) => {
+      const date = this.datePipe.transform(eventTime, 'yyyy-MM-dd');
       statistic[date] = (statistic[date] || 0) + 1;
     });
 

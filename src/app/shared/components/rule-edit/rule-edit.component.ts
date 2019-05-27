@@ -1,4 +1,4 @@
-import { Component, OnInit, Host } from '@angular/core';
+import { Component, OnInit, Host, Input } from '@angular/core';
 import { EventRuleItem } from 'app/model/rule/event-rule-item.model';
 import { PropertyRuleItem } from 'app/model/rule/property-rule-item.model';
 import { PropertyItem } from 'app/model/rule/property-item.model';
@@ -16,6 +16,20 @@ export class RuleEditComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  public setDefaultScript(script) {
+    if (typeof script === 'string') {
+      script = JSON.parse(script);
+    }
+
+    console.log({ a: script });
+
+    this.ruleList = script;
+  }
+
+  public getCurrentScript() {
+    return JSON.stringify(this.ruleList);
+  }
 
   public addPropertyRule(group?: Array<PropertyRuleItem | EventRuleItem>) {
     const ruleItem = new PropertyRuleItem();

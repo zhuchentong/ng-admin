@@ -30,4 +30,15 @@ export class GroupService {
       append: [id]
     });
   }
+
+  /**
+   * 获取分组状态列表
+   */
+  public getGroupById(id): Observable<GroupModel> {
+    return this.net.send({
+      service: groupController.getGroupById,
+      append: [id],
+      model: GroupModel
+    });
+  }
 }
